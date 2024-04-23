@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Order - Flower Shop</title>
+    <script src="https://kit.fontawesome.com/fce219d3b5.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./resources/css/placeOrder.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav>
+        <div>
+            <div id="project-logo">
+            </div>
+            <h1><a href="index.html">Final Project</a></h1>
+        </div>
+
+    </nav>
+    
+    <!-- Progress Section -->
+    <div class="progress-container">
+        <div class="progress-bar">
+            <div class="progress" style="width: 50%;"></div>
+            <div class="step">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <div class="step current">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <div class="step done"></div>
+        </div>
+        <div class="labels">
+            <label class="review">REVIEW</label>
+            <label class="current">DELIVERY</label>
+            <label class="done">DONE</label>
+        </div>
+    </div>
+
+    <!-- Display Order Information for Confirmation -->
+    <div class="order-container">
+        <div id="vertical">
+            <img src="" alt="Flowers">
+        </div>
+
+        <div id="rightDiv">
+            <h3 id="theFlowerName"></h3>
+
+            <hr id="divider1">
+
+            <h4>Delivery Date</h4>
+            <p id="deliveryDate"></p>
+            <hr id="divider2">
+
+            <h4>Item Pricing</h4>
+            <p id="itemPrice"></p>
+            <hr id="divider3">
+
+            <h4>Delivery Address</h4>
+            <p id="theRecipientName"></p>
+            <p id="theRecipientAddress"></p>
+            <p id="theRecipientMoreAddress"></p>
+
+            <!-- Total Calculation  -->
+            
+            <div id="total">
+                <div class="offer">
+                    You are saving <span>$10</span> on this order!
+                </div>
+                
+
+                <div class="numbers">
+                    <div class="flex-container">
+                        <p class="label" style="font-weight:bold;">SUBTOTAL:</p>
+                        <p class="value" style="font-weight:bold;" id="subtotal">[$74.00]</p>
+                    </div>
+                    <div class="flex-container">
+                        <p class="label">Delivery:</p>
+                        <p class="value">$25.00</p>
+                    </div>
+                    <div class="flex-container">
+                        <p class="label" id="discountLabel">Delivery Discount:</p>
+                        <p class="value" id="discountValue">-$10.00</p>
+                    </div>
+                    <div class="flex-container">
+                        <p class="label">Tax:</p>
+                        <p class="value">$0.00</p>
+                    </div>
+                    <hr>
+                    <div class="flex-container" id="orderTotalDiv">
+                        <p class="label" style="font-weight:bold;">ORDER TOTAL:</p>
+                        <p class="value" style="font-weight:bold;" id="totalPrice"></p>
+                    </div>
+                </div>
+            </div>
+            <div id="terms">
+                <p>By Clicking "Place Order" you agree to the <span>Terms of Use</span> and <span>Privacy Policy</span></p>
+            </div>
+
+            <div id="row6">
+                <button onclick="submitOrder()" type="submit">PLACE ORDER</button>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="configuration.js"></script>
+    <script>
+        const host = getHost();
+        let flowerInCart = JSON.parse(getTheItem());
+        console.log(flowerInCart);
+
+
+
+        // document.getElementById("formFlowerName").innerHTML = flowerInCart.flowerName.toUpperCase();
+        // document.getElementById("formFlowerPrice").innerHTML = "$" + flowerInCart.price;
+        document.getElementById("theFlowerName").innerHTML = flowerInCart.flowerName;
+        document.getElementById("deliveryDate").innerHTML = flowerInCart.deliveryDate;
+        document.getElementById("itemPrice").innerHTML = "$" + flowerInCart.price + ".00";
+        document.getElementById("subtotal").innerHTML = "$" + flowerInCart.price + ".00";
+        let name = flowerInCart.recipientFirstName + " " + flowerInCart.recipientLastName;
+        document.getElementById("theRecipientName").innerHTML = name;
+        let address = flowerInCart.address;
+        if (flowerInCart.apt !== "") {
+            address += ", " + flowerInCart.apt;
+            document.getElementById("theRecipientAddress").innerHTML = address;
+        }
+        else {
+            document.getElementById("theRecipientAddress").innerHTML = address;
+        }
+
+        let moreAddress = flowerInCart.city + ", " + flowerInCart.state + " " + flowerInCart.zipcode;
+        document.getElementById("theRecipientMoreAddress").innerHTML = moreAddress;
+
+        if (!isLoggedIn()) {
+            //Remove the delivery discount
+            document.getElementById("discountLabel").innerHTML = "";
+            document.getElementById("discountValue").innerHTML = "";
+
+            //Remove the "offer" div
+            document.querySelector(".offer").style.display = "none";
+        }
+
+        if (isLoggedIn()) {
+            let totalPrice = parseInt(flowerInCart.price) + 25 - 10;
+            document.getElementById("totalPrice").innerHTML = "$" + totalPrice + ".00";
+        }
+        else {
+            let totalPrice = parseInt(flowerInCart.price) + 25;
+            document.getElementById("totalPrice").innerHTML = "$" + totalPrice + ".00";
+        }
+
+        // let deliveryDate = flowerInCart.deliveryDate;
+        // const date = new Date(deliveryDate);
+        // const options = { month: 'long', day: 'numeric', year: 'numeric' };
+        // const formattedDate = date.toLocaleDateString('en-US', options);
+        // document.getElementById("deliveryDate").innerHTML = formattedDate;
+        
+        let flowerId = flowerInCart.flowerId;
+
+        getTheImage(flowerId).then((blob) => {
+            let url = URL.createObjectURL(blob);
+            document.querySelector("#vertical img").src = url;
+        });
+        
+        async function getTheImage(flowerId) {
+            let response = await fetch(host + "/flowers/" + flowerId + "/image");
+            let result = await response.blob();
+            return result;
+        }
+
+
+        async function submitOrder() {
+            let username = "";
+            if (isLoggedIn()) {
+                username = JSON.parse(getTheUsername());
+            }
+
+            let flowerId = flowerInCart.flowerId;
+            let purchaseOption = flowerInCart.purchaseOption;
+            let recipientFirstName = flowerInCart.recipientFirstName;
+            let recipientLastName = flowerInCart.recipientLastName;
+            let recipientRelationship = flowerInCart.recipientRelationship;
+            let deliveryDate = flowerInCart.deliveryDate;
+            let deliveryAddress = flowerInCart.address;
+            let deliveryApt = flowerInCart.apt;
+            let deliveryCity = flowerInCart.city;
+            let deliveryState = flowerInCart.state;
+            let deliveryZipcode = flowerInCart.zipcode;
+
+            let totalCost = 0;
+            if (isLoggedIn()) {
+                totalCost = parseInt(flowerInCart.price) + 25 - 10;
+            }
+            else {
+                totalCost = parseInt(flowerInCart.price) + 25;
+            }
+
+            let orderStatus = "submitted";
+
+            let order = {
+                username: username,
+                flowerId: flowerId,
+                purchaseOption: purchaseOption,
+                recipientFirstName: recipientFirstName,
+                recipientLastName: recipientLastName,
+                recipientRelationship: recipientRelationship,
+                deliveryDate: deliveryDate,
+                deliveryAddress: deliveryAddress,
+                deliveryApt: deliveryApt,
+                deliveryCity: deliveryCity,
+                deliveryState: deliveryState,
+                deliveryZipcode: deliveryZipcode,
+                totalCost: totalCost,
+                orderStatus: orderStatus
+            }
+
+            console.log(order);
+
+            let request = await fetch(host + "/order", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(order)
+            });
+
+            let result = await request.json();
+            console.log(result);
+
+            if (request.status === 200) {
+                alert("Order submitted successfully!");
+                removeTheItem();
+                window.location.href = "index.html";
+            }
+            else {
+                alert("Order submission failed. Please try again.");
+            }
+
+        }
+
+
+
+    </script>
+
+</body>
+</html>

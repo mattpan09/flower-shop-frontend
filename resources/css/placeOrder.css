@@ -1,0 +1,432 @@
+/* For the navigation bar */
+nav {
+    height: 57px;
+    top: 58px;
+    left: 29px;
+    border-top-style: solid;
+    border-top-color:#E2B3D6;
+}
+
+nav ul {
+    margin-right: 110px;
+    margin-top: 15px;
+    margin-bottom: 0px;
+    padding: 0;
+    float: right;
+    /* display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; */
+    
+}
+
+nav ul li {
+    display: inline;
+    padding: 0 15px;
+    font-weight: 700px;
+    font-size: 18px;
+    line-height: 38.73px;
+    color: #1E3050;
+    /* margin-left: 50px; */
+}
+
+#user-image {
+    display: inline;
+    padding: 0 15px;
+}
+
+#basket-icon {
+    /* background-color: #1E3050; */
+    position: absolute;
+    margin-top: 10px;
+    margin-right: 20px;
+    width: 10px;
+    height: 10px;
+    /* border-radius: 50%; */
+    display: inline-block;
+    /* padding: 0 15px; */
+}
+
+#basket-filler {
+    background-color: #1E3050;
+    position: absolute;
+    margin-top: 9px;
+    margin-right: 10px;
+    margin-left: 18px;
+    width: 15px;
+    height: 9.5px;
+    border-radius: 90%;
+    /* display: inline-block; */
+    /* padding: 0 15px; */
+
+}
+
+#basket-counter {
+    color: white;
+    position: absolute;
+    margin-top: -15px;
+    margin-right: 3px;
+    margin-left: 22px;
+    width: 15px;
+    height: 9.5px;
+    border-radius: 90%;
+    font-size: 14px;
+}
+
+#basket-icon i {
+    padding: 0 15px;
+    width: 20px;
+    height: 20px;
+    font-size: 18.5px;
+}
+
+
+nav ul li a {
+    text-decoration: none;
+    color: #1E3050;
+}
+
+nav h1 a {
+    text-decoration: none;
+    color: white;
+    border: white;
+}
+
+#project-logo {
+    border-radius: 50%;
+    width: 110px;
+    height: 110px;
+    background-color: #FF8E00;
+    position: absolute;
+    top: 15px;
+}
+
+nav h1 {
+    font-size: 20px;
+    line-height: 29.05px;
+    font-weight: 700px;
+    color: #CE6D46;
+    width: 223px;
+    height: 57px;
+    /* top: 30px; */
+    margin-top: 44px;
+    left: 18px;
+    position: absolute;
+    border: #CE6D46;
+    font-family: "Dancing Script", cursive;
+    font-optical-sizing: auto;
+    font-weight: 400px;
+    font-style: normal;
+
+}
+
+/* Login/Signup and Progress Section */
+.progress-container {   
+    position: relative;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 45px;
+    width: 25%;
+}
+  
+.progress-bar {
+    position: relative;
+    height: 5px;
+    background: #144C3D;
+    margin-top: 18px;
+}
+  
+.progress {
+    height: 100%;
+    background: #144C3D;
+    position: absolute;
+    z-index: 1;
+}
+  
+.step {
+    position: absolute;
+    top: -7px;
+    background: #144C3D;
+    border: 3px solid #144C3D;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    z-index: 2;
+}
+
+.step .fa-solid.fa-check {
+    margin-top: 3px;
+    margin-left: 0px;
+    color: white;
+}
+
+.step.done {
+    left: 95%;
+    background: #144C3D;
+    border-color: #144C3D;
+    border-width: 10px;
+    width: 8px;
+    height: 8px;
+    background: white;
+}
+  
+.step.current {
+    left: 49%;
+    /* border-width: 10px;
+    width: 8px;
+    height: 8px;
+    background: white; */
+
+    position: absolute;
+    top: -7px;
+    background: #144C3D;
+    border: 3px solid #144C3D;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    z-index: 2;
+    
+}
+
+.step.current .fa-solid.fa-check {
+    margin-top: 3px;
+    margin-left: 0px;
+    color: white;
+}
+  
+.labels {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    width: 100%;
+    top: 30px;
+}
+  
+.label {
+    text-align: center;    
+}
+  
+label.review {
+    font-weight: bold;
+    color: #144C3D;
+    margin-left: -12.5px;
+}
+  
+label.current {
+    font-weight: bold;
+    color: #144C3D;
+}
+  
+label.done {
+    font-weight: bold;
+    color: #144C3D;
+    margin-right: -12.5px;
+}
+  
+.offer {
+    width: 30%;
+    margin: 0 auto;
+    margin-top: 65px;
+    background: #144C3D;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+.offer span {
+    font-weight: bold;
+}
+  
+.buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+  
+.btn {
+    padding: 15px 20px;
+    margin: 0 10px;
+    border: 2px solid #144C3D;
+    background: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+  
+.btn.login {
+    color: #144C3D;
+    font-weight: bold;
+    /* width: 295px; */
+    width: 15.5%;
+}
+  
+.btn.signup {
+    color: #144C3D;
+    font-weight: bold;
+    /* width: 295px; */
+    width: 15.5%;
+}
+  
+/* Responsive adjustments */
+@media (max-width: 600px) {
+.step {
+      display: block;
+      margin: 20px auto;
+}
+  
+.progress-bar {
+      margin-top: 0;
+}
+}
+
+
+
+/* Display Order Information for Confirmation */
+.order-container {
+    margin: 0 auto;
+    margin-top: 80px;
+    padding: 20px;
+    width: 60%;
+    border-radius: 10px;
+}
+
+#vertical {
+    border-left: 1px solid #ccc;
+    height: 100%;
+    position: absolute;
+    /* left: 50%; */
+    width: 10%;
+    /* left: 11.6%; */
+}
+
+#vertical img {
+    width: 100%;
+    height: auto;
+}
+
+
+#rightDiv {
+    /* width: 90%; */
+    margin-left: 200px;
+    margin-top: -220px;
+    /* display: flex; */
+}
+
+#rightDiv h3 {
+    font-size: 24px;
+    width: 100%;
+    margin-top: 220px;
+}
+
+#divider1 {
+    margin-top: 60px;
+}
+
+#rightDiv p {
+    margin-top: -10px;
+}
+
+#divider2 {
+    margin-top: 20px;
+}
+
+h4 {
+    color : grey;
+}
+
+.offer {
+    width: 93%;
+    margin: 0 auto;
+    margin-top: 15px;
+    background: #DBE7E6;
+    color: black;
+    text-align: center;
+    padding: 15px;
+    font-weight: bold;
+}
+
+.offer span {
+    color: #52796F;
+}
+
+#total {
+    background-color: #F7F9FC;
+    padding: 5px;
+    margin-top: 70px;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;   
+}
+
+.flex-container p {
+    /* font-weight: bold; */
+    display: inline;
+}
+
+.flex-container h6 {
+    /* font-weight: bold; */
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin: 1px;
+    padding: 1px;
+}
+
+.flex-container h5 {
+    /* font-weight: bold; */
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin: 1px;
+    padding: 1px;
+}
+
+.label {
+    margin-left: 10px;
+    margin-top: 20px;
+}
+
+.value {
+    margin-right: 10px;
+    margin-top: 20px;
+}
+
+.numbers {
+    margin-top: 25px;
+}
+
+#orderTotalDiv {
+    margin-top: 25px;
+}
+
+#discountLabel {
+    color: #73A696;
+}
+
+#discountValue {
+    color: #73A696;
+}
+
+.numbers hr {
+    width: 95%;
+    color: lightgray;
+}
+
+p span {
+    color: seagreen;
+}
+
+#terms {
+    margin-top: 28px;
+    margin-left: 38%;
+}
+
+#row6 button {
+    width: 200px;
+    margin-top: 30px;
+    margin-left: 75%;
+    padding: 15px;
+    background-color: #144C3D;
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}

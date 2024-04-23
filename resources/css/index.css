@@ -1,0 +1,324 @@
+/* For the navigation bar */
+nav {
+    height: 57px;
+    top: 58px;
+    left: 29px;
+    border-top-style: solid;
+    border-top-color:#E2B3D6;
+}
+
+nav ul {
+    margin-right: 110px;
+    margin-top: 15px;
+    margin-bottom: 0px;
+    padding: 0;
+    float: right;
+    /* display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; */
+    
+}
+
+nav ul li {
+    display: inline;
+    padding: 0 15px;
+    font-weight: 700px;
+    font-size: 18px;
+    line-height: 38.73px;
+    color: #1E3050;
+    /* margin-left: 50px; */
+}
+
+#user-image {
+    display: inline;
+    padding: 0 15px;
+}
+
+#basket-icon {
+    /* background-color: #1E3050; */
+    position: absolute;
+    margin-top: 10px;
+    margin-right: 20px;
+    width: 10px;
+    height: 10px;
+    /* border-radius: 50%; */
+    display: inline-block;
+    /* padding: 0 15px; */
+}
+
+#basket-filler {
+    background-color: #1E3050;
+    position: absolute;
+    margin-top: 9px;
+    margin-right: 10px;
+    margin-left: 18px;
+    width: 15px;
+    height: 9.5px;
+    border-radius: 90%;
+    /* display: inline-block; */
+    /* padding: 0 15px; */
+
+}
+
+#basket-counter {
+    color: white;
+    position: absolute;
+    margin-top: -15px;
+    margin-right: 3px;
+    margin-left: 22px;
+    width: 15px;
+    height: 9.5px;
+    border-radius: 90%;
+    font-size: 14px;
+}
+
+#basket-icon i {
+    padding: 0 15px;
+    width: 20px;
+    height: 20px;
+    font-size: 18.5px;
+}
+
+
+nav ul li a {
+    text-decoration: none;
+    color: #1E3050;
+}
+
+nav h1 a {
+    text-decoration: none;
+    color: white;
+    border: white;
+}
+
+#project-logo {
+    border-radius: 50%;
+    width: 110px;
+    height: 110px;
+    background-color: #FF8E00;
+    position: absolute;
+    top: 15px;
+}
+
+nav h1 {
+    font-size: 20px;
+    line-height: 29.05px;
+    font-weight: 700px;
+    color: #CE6D46;
+    width: 223px;
+    height: 57px;
+    /* top: 30px; */
+    margin-top: 44px;
+    left: 18px;
+    position: absolute;
+    border: #CE6D46;
+    font-family: "Dancing Script", cursive;
+    font-optical-sizing: auto;
+    font-weight: 400px;
+    font-style: normal;
+
+}
+
+/* Display of image */
+
+/* body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+} */
+  
+.container-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F3E1DB; 
+    width: 95%;
+    height: 250px;
+    margin: 0 auto;
+    margin-top: 130px;
+
+}
+
+.text-section {
+    flex: 1;
+    padding: 20px;
+    /* color: #333; */
+    border-right: solid;
+    border-right-color: white;
+    border-width: 7px;
+    height: 100%;
+    margin-left: 10px;
+}
+
+.text-section h2 {
+    font-size: 1.5em;
+    margin: 30px 0 10px 0px;
+}
+
+.text-section hr {
+    width: 2.5%;
+    margin-left: 0px;
+    border-width: 1.5px;
+    border-color: black;
+    color: black;
+}
+
+.text-section p {
+    font-size: 1em;
+    margin: 0;
+}
+
+.image-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-display img {
+    height: 100%;
+    width: 40%;
+    object-fit: cover;
+    
+}
+
+/* .image-section img {
+    max-width: 100%;
+    height: auto;
+} */
+
+/* Additional media queries to handle responsiveness */
+@media (max-width: 768px) {
+.container-display {
+    flex-direction: column;
+}
+}
+  
+
+
+/* Filters and Sort */
+
+.filter-sort-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F5F5F5;
+    width: 95%;
+    height: 50px;
+    margin: 0 auto;
+    margin-top: 15px;
+    /* padding: 20px; */
+
+}
+
+.sort-group, .filter-group {
+    display: flex;
+    align-items: center;
+}
+
+.filter-group {
+    margin-left: 10px;
+}
+
+/* .filter-group {
+    display: flex;
+    align-items: left;
+} */
+
+  
+label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+  
+select {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+}
+  
+  
+  /* Additional media queries to handle responsiveness */
+@media (max-width: 768px) {
+    .filter-sort-container {
+      flex-direction: column;
+    }
+    
+    .filter-group, .sort-group {
+      width: 100%;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+  
+    select {
+      flex: 1;
+    }
+}
+
+
+/* Flower Display */
+.flowers {
+    display: flex;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: #F5F5F5; */
+    width: 98%;
+    height: 100%;
+    margin: 0 auto;
+    margin-top: 25px;
+    gap: 50px;
+
+}
+
+.flowers .flower {
+    /* display: flex; */
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    display: block;
+    position: relative;
+}
+
+.flowers .flower span {
+    position:absolute; 
+    width:100%;
+    height:100%;
+    top:0;
+    left: 0;
+    z-index: 1;
+
+  /* fixes overlap error in IE7/8, 
+     make sure you have an empty gif */
+    background-image: url('empty.gif');
+}
+
+.flowers .flower img {
+    height: 450px;
+    width: 450px;
+}
+
+.flowers .flower h5 {
+    font-size: 1.15em;
+    text-transform: uppercase;
+    margin: 5px 0 0px 0px;
+}
+
+.flowers .flower p {
+    font-size: 0.9em;
+    margin: -20px 0 10px 0px;
+    color: #383838;
+    display: inline;
+    padding-bottom: 10px;
+}
+
+.flowers .flower h6 {
+    font-size: 1em;
+    margin: -10px 0 10px 5px;
+    display: inline;
+    padding-bottom: 10px;
+}

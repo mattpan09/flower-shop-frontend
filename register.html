@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Flower Shop</title>
+    <script src="https://kit.fontawesome.com/fce219d3b5.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./resources/css/authentication.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+     <!-- Navigation bar -->
+     <nav>
+        <div>
+            <div id="project-logo">
+            </div>
+            <h1><a href="index.html">Final Project</a></h1>
+        </div>
+        <ul>
+            <li id=""><a href="trackOrder.html">Track Order</a></li>
+            <li id=""><a>Help</a></li>
+            <a class="fa-solid fa-user" id="user-image" style="color: #1E3050;" href="login.html"></a>
+            <div id="basket-icon">
+                <!-- <p> -->
+                <div id="basket-filler"></div>
+                <i class="fa-solid fa-basket-shopping" style="color: #1E3050;"></i>
+                <!-- </p> -->
+                <p id="basket-counter">0</p>
+            </div>
+            
+        </ul>
+    </nav>
+
+    <!-- Login/Registration -->
+    <h2>SIGN UP TO SAVE</h2>
+    <div class="container2">
+        <div id="switch">
+            <button onclick="window.location.href='register.html'">SIGN UP</button>
+            <button onclick="window.location.href='login.html'">LOG IN</button>
+        </div>
+        <!-- <form> -->
+            <!-- <h2>Login</h2> -->
+
+            <div class="formDiv">
+                <label for="email"><b>Email</b></label>
+                <input type="text" id="email" placeholder="name@example.com" name="email" required>
+            </div>
+            <div class="formDiv">
+                <label for="username"><b>Username</b></label>
+                <input type="text" id="username" placeholder="Username" name="username" required>
+            </div>
+            <div class="formDiv">
+                <label for="password"><b>Password</b></label>
+                <input type="password" id="password" placeholder="Password" name="psw" required>
+            </div>
+            <p>Show Password</p>
+            <!-- <input type="button" onclick="login()" value="Login"> -->
+
+            <div id="row6" class="formDiv">
+                <button class=".signupbtn" type="submit" onclick="signUp()">CREATE AN ACCOUNT</button>
+                <p>By Clicking "Create an Account" you agree to the <span>Terms of Use</span> and <span>Privacy Policy</span></p>
+            </div>
+            
+        <!-- </form> -->
+        
+    </div>
+    
+
+    <script src="configuration.js"></script>
+    <!-- <script src="register.js"></script> -->
+    <script>
+        // event.preventDefault();
+        // document.querySelector('.signupbtn').addEventListener('click', signUp);
+
+        const host = getHost();
+
+
+        if (hasItem()) {
+            let basketCounter = document.querySelector("#basket-counter");
+            basketCounter.innerHTML = 1;
+        }
+        else {
+            let basketCounter = document.querySelector("#basket-counter");
+            basketCounter.innerHTML = 0;
+        }
+
+
+        async function signUp() {
+            let email = document.querySelector("#email").value;
+            let username = document.querySelector("#username").value;
+            let password = document.querySelector("#password").value;
+
+            let response = await fetch(host + "/signup", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                    email: email
+                })
+            });
+
+            let result = await response.json();
+            console.log(result);
+
+            if (response.status === 200) {
+                alert('Account created successfully');
+                window.location.href = 'login.html';
+            }
+            else {
+                alert('Account creation failed');
+            }
+
+            // if (result.success) {
+            //     alert('Account created successfully');
+            //     window.location.href = 'login.html';
+            // }
+        }
+
+    </script>
+</body>
+</html>

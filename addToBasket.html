@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add to Basket - Flower Shop</title>
+    <script src="https://kit.fontawesome.com/fce219d3b5.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./resources/css/addToBasket.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav>
+        <div>
+            <div id="project-logo">
+            </div>
+            <h1><a href="index.html">Final Project</a></h1>
+        </div>
+        <ul>
+            <li id=""><a href="trackOrder.html">Track Order</a></li>
+            <li id=""><a>Help</a></li>
+            <a class="fa-solid fa-user" id="user-image" style="color: #1E3050;" onclick="goToLogin()"></a>
+            <div id="basket-icon">
+                <!-- <p> -->
+                <div id="basket-filler"></div>
+                <i class="fa-solid fa-basket-shopping" style="color: #1E3050;"></i>
+                <!-- </p> -->
+                <p id="basket-counter">0</p>
+            </div>
+            
+        </ul>
+    </nav>
+
+
+    <!-- Display of Item -->
+    <div class="product-container">
+        <div class="image-container">
+            <!-- Image sourced from the given picture, need to replace with actual path -->
+            <img src="" alt="Flowers" />
+        </div>
+        <div class="details-container">
+            <!-- <h1>The Angels</h1> -->
+            <div class="delivery-date">
+                <label for="deliveryDate">DELIVERY DATE*</label>
+                <input type="date" id="deliveryDate" name="deliveryDate" placeholder="Select a Date">
+            </div>
+            <h2>PURCHASING OPTIONS*</h2>
+            <div class="purchasing-options">
+                <!-- <h2>PURCHASING OPTIONS</h2> -->
+                <div class="option1">
+                    <label for="subscription">
+                        <input type="radio" id="subscription" name="purchaseOption">
+                        Start a Subscription: <span id="subscriptionPrice" class="price">$52 + free shipping</span>
+                        <hr>
+                    </label>
+                    <ul class="subscription-details">
+                        <li><span class="price">Best Value:</span> Up to 30% off + free shipping on subscription deliveries.</li>
+                        <li><span class="price">Flexible:</span> Pick your flowers, date & recipient every month, or set it & forget it.</li>
+                        <li><span class="price">No Obligations:</span> Skip as often as you like. Cancel anytime.</li>
+                    </ul>
+                </div>
+                <div class="option2">
+                    <label for="one-time">
+                        <input type="radio" id="one-time" name="purchaseOption">
+                        One time purchase: <span id="normalPrice" class="price">$74</span>
+                    </label>
+                </div>
+            </div>
+            <button class="add-to-basket" onclick="addToBasket()">ADD TO BASKET</button>
+        </div>
+    </div>
+
+
+    <!-- Info Needed: Name, Picture, Sub Price, Price -->
+    <script src="configuration.js"></script>
+    <script>
+        const host = getHost();
+        if (hasItem()) {
+            let basketCounter = document.querySelector("#basket-counter");
+            basketCounter.innerHTML = 1;
+        }
+        else {
+            let basketCounter = document.querySelector("#basket-counter");
+            basketCounter.innerHTML = 0;
+        }
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const flowerId = urlParams.get('flowerId');
+        const flowerName = urlParams.get('flowerName');
+        const flowerNormalPrice = urlParams.get('flowerNormalPrice');
+        const flowerPrice = urlParams.get('flowerPrice');
+
+        let flowerNameToDisplay = document.createElement("h1");
+        flowerNameToDisplay.innerHTML = flowerName;
+        document.querySelector(".details-container").prepend(flowerNameToDisplay);
+
+        document.querySelector("#subscriptionPrice").innerHTML = "$" + flowerPrice + " + free shipping";
+        document.querySelector("#normalPrice").innerHTML = "$" + flowerNormalPrice;
+
+        getTheImage(flowerId).then((blob) => {
+            let url = URL.createObjectURL(blob);
+            document.querySelector(".image-container img").src = url;
+        });
+
+        
+
+        async function getTheImage(flowerId) {
+            let response = await fetch(host + "/flowers/" + flowerId + "/image");
+            let result = await response.blob();
+            return result;
+        }
+
+        async function addToBasket() {
+            let deliveryDate = document.querySelector("#deliveryDate").value;
+            let purchaseOption = document.querySelector('input[name="purchaseOption"]:checked');
+
+            if (deliveryDate === "" || purchaseOption === "" || purchaseOption === null || deliveryDate === null) {
+                alert("You must select a delivery date and a purchase option to add to basket. Please try again.");
+                return;
+            }
+            if (deliveryDate < new Date().toISOString().split('T')[0]) {
+                alert("You must select a delivery date that is in the future. Please try again.");
+                return;
+            }
+
+
+            let price = purchaseOption.id === "subscription" ? flowerPrice : flowerNormalPrice;
+
+            console.log(deliveryDate);
+            console.log(purchaseOption);
+            console.log(price);
+
+            //Order schema - id, username, flowerId, purchaseOption, 
+            //recipientFirstName, recipientLastName, recipientRelationship,
+            //deliveryDate, deliveryAddress, deliveryApt, deliveryCity, deliveryState, deliveryZipcode
+            //total cost
+            let item = {
+                flowerId: flowerId,
+                flowerName: flowerName,
+                deliveryDate: deliveryDate,
+                purchaseOption: purchaseOption.id,
+                price: price
+            }
+            saveTheItem(item);
+            if (hasItem()) {
+                let basketCounter = document.querySelector("#basket-counter");
+                basketCounter.innerHTML = 1;
+            }
+            else {
+                let basketCounter = document.querySelector("#basket-counter");
+                basketCounter.innerHTML = 0;
+            }
+
+            saveThePreviousPage("addToBasket.html");
+            if (isLoggedIn()) {
+                window.location.href = "addDeliveryInfoLogged.html";
+            }
+            else {
+                window.location.href = "addDeliveryInfoNotLogged.html";
+            }
+
+
+
+        }
+
+        async function goToLogin() {
+            // saveForm();
+            // console.log(getTheItem());
+
+            let thisPage = "index.html";
+            saveThePreviousPage(thisPage);
+            // console.log(getThePreviousPage());
+
+            window.location.href = "login.html";
+        }
+
+
+    </script>
+</body>
+</html>

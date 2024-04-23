@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Flower Shop</title>
+    <script src="https://kit.fontawesome.com/fce219d3b5.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./resources/css/authentication.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+     <!-- Navigation bar -->
+     <nav>
+        <div>
+            <div id="project-logo">
+            </div>
+            <h1><a href="index.html">Final Project</a></h1>
+        </div>
+        <ul>
+            <li id=""><a href="trackOrder.html">Track Order</a></li>
+            <li id=""><a>Help</a></li>
+            <a class="fa-solid fa-user" id="user-image" style="color: #1E3050;" href="login.html"></a>
+            <div id="basket-icon">
+                <!-- <p> -->
+                <div id="basket-filler"></div>
+                <i class="fa-solid fa-basket-shopping" style="color: #1E3050;"></i>
+                <!-- </p> -->
+                <p id="basket-counter">0</p>
+            </div>
+            
+        </ul>
+    </nav>
+
+
+    <!-- Login/Registration -->
+    <div class="container">
+        <div id="switch">
+            <button onclick="window.location.href='register.html'">SIGN UP</button>
+            <button onclick="window.location.href='login.html'">LOG IN</button>
+        </div>
+        <!-- <form> -->
+            <!-- <h2>Login</h2> -->
+
+            <div class="formDiv">
+                <label for="username"><b>Username</b></label>
+                <input type="text" id="username" placeholder="Username" required>
+            </div>
+            <div class="formDiv">
+                <label for="password"><b>Password</b></label>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <p>Show Password</p>
+            <!-- <input type="button" onclick="login()" value="Login"> -->
+
+            <div id="row6" class="formDiv">
+                <button type="submit" onclick="login()">LOG IN</button>
+                <button type="submit" onclick="logout()">LOG OUT</button>
+            </div>
+
+            
+        <!-- </form> -->
+        
+    </div>
+
+    <script src="configuration.js"></script>
+    <script>
+        if (hasItem()) {
+            let basketCounter = document.querySelector("#basket-counter");
+            basketCounter.innerHTML = 1;
+        }
+        else {
+            let basketCounter = document.querySelector("#basket-counter");
+            basketCounter.innerHTML = 0;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+/* For the navigation bar */
+nav {
+    height: 57px;
+    top: 58px;
+    left: 29px;
+    border-top-style: solid;
+    border-top-color:#E2B3D6;
+}
+
+nav ul {
+    margin-right: 110px;
+    margin-top: 15px;
+    margin-bottom: 0px;
+    padding: 0;
+    float: right;
+    /* display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; */
+    
+}
+
+nav ul li {
+    display: inline;
+    padding: 0 15px;
+    font-weight: 700px;
+    font-size: 18px;
+    line-height: 38.73px;
+    color: #1E3050;
+    /* margin-left: 50px; */
+}
+
+#user-image {
+    display: inline;
+    padding: 0 15px;
+}
+
+#basket-icon {
+    /* background-color: #1E3050; */
+    position: absolute;
+    margin-top: 10px;
+    margin-right: 20px;
+    width: 10px;
+    height: 10px;
+    /* border-radius: 50%; */
+    display: inline-block;
+    /* padding: 0 15px; */
+}
+
+#basket-filler {
+    background-color: #1E3050;
+    position: absolute;
+    margin-top: 9px;
+    margin-right: 10px;
+    margin-left: 18px;
+    width: 15px;
+    height: 9.5px;
+    border-radius: 90%;
+    /* display: inline-block; */
+    /* padding: 0 15px; */
+
+}
+
+#basket-counter {
+    color: white;
+    position: absolute;
+    margin-top: -15px;
+    margin-right: 3px;
+    margin-left: 22px;
+    width: 15px;
+    height: 9.5px;
+    border-radius: 90%;
+    font-size: 14px;
+}
+
+#basket-icon i {
+    padding: 0 15px;
+    width: 20px;
+    height: 20px;
+    font-size: 18.5px;
+}
+
+
+nav ul li a {
+    text-decoration: none;
+    color: #1E3050;
+}
+
+nav h1 a {
+    text-decoration: none;
+    color: white;
+    border: white;
+}
+
+#project-logo {
+    border-radius: 50%;
+    width: 110px;
+    height: 110px;
+    background-color: #FF8E00;
+    position: absolute;
+    top: 15px;
+}
+
+nav h1 {
+    font-size: 20px;
+    line-height: 29.05px;
+    font-weight: 700px;
+    color: #CE6D46;
+    width: 223px;
+    height: 57px;
+    /* top: 30px; */
+    margin-top: 44px;
+    left: 18px;
+    position: absolute;
+    border: #CE6D46;
+    font-family: "Dancing Script", cursive;
+    font-optical-sizing: auto;
+    font-weight: 400px;
+    font-style: normal;
+
+}
+
+
+
+/* Display of Items */
+.product-container {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+
+    /* width: 95%; */
+    padding: 20px;
+    /* justify-content: space-between; */
+    margin: 0 auto;
+    margin-top: 150px;
+    margin-left: 15%;
+}
+  
+.image-container img {
+    max-width: 100%;
+    display: block;
+    width: 600px;
+    height: 600px;
+}
+  
+.details-container {
+    padding-left: 20px;
+    max-width: 50%;
+    margin-left: 30px;
+}
+  
+.details-container h1 {
+    font-size: 2.5em;
+    margin-left: 200px;
+    margin-top: -10px;
+}
+  
+.details-container .delivery-date {
+    margin: 20px 0;
+    margin-top: 50px;
+}
+
+.details-container .delivery-date label {
+    margin: 20px 0;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+  
+.details-container .delivery-date input[type=date] {
+    width: 100%;
+    padding: 10px;
+}
+
+.details-container h2 {
+    font-size: 18px;
+}
+  
+.details-container .purchasing-options {
+    border: 1px solid #cccccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+  
+/* .details-container .purchasing-options h2 {
+    margin-top: 0;
+} */
+  
+.details-container .purchasing-options .option1 {
+    background-color: #F7F9FC;
+    width: 100%;
+    padding: 20px;
+    margin-left: -20px;
+    margin-top: -20px;
+}
+
+.details-container .purchasing-options .option1 label {
+    font-size: 18px;
+}
+
+.details-container .purchasing-options .option2 {
+    width: 100%;
+    padding: 20px;
+    margin-left: -20px;
+    margin-top: -20px;
+}
+
+.details-container .purchasing-options .option2 label {
+    font-size: 18px;
+    margin-top: 40px;
+}
+
+.details-container hr {
+    width: 75%;
+    margin-top: 10px;
+    margin-left: 25px;
+}
+
+.details-container .purchasing-options label {
+    display: block;
+    margin: 10px 0;
+}
+
+.details-container .price {
+    font-weight: bold;
+}
+  
+.subscription-details {
+    padding-left: 20px;
+    list-style-type: none;
+}
+   
+.add-to-basket {
+    background-color: #154B3C;
+    color: white;
+    padding: 20px 20px;
+    border: none;
+    cursor: pointer;
+    width: 108%;
+    font-weight: bold;
+}
+  
+  /* Responsive adjustments */
+@media (max-width: 768px) {
+    .product-container {
+      flex-direction: column;
+    }
+    .details-container {
+      max-width: 100%;
+    }
+}

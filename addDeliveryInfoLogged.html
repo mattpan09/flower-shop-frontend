@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Delivery Information - Flower Shop</title>
+    <script src="https://kit.fontawesome.com/fce219d3b5.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./resources/css/addDeliveryInfo.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav>
+        <div>
+            <div id="project-logo">
+            </div>
+            <h1><a href="index.html">Final Project</a></h1>
+        </div>
+
+    </nav>
+
+
+    <!-- Form -->
+    <div id="form">
+        <hr>
+        <div id="titleDiv">
+            <div class="flex-container">
+                <h3 id="formFlowerName"></h3>
+            </div>
+            <div class="flex-container">
+                <h3 id="formFlowerPrice"></h3>
+            </div>
+        </div>
+        <hr>
+
+
+        <div id="vertical">
+            <img src="" alt="Flowers">
+            <p>Delivery Date</p>
+            <p id="deliveryDate"></p>
+        </div>
+
+        <div id="rightDiv">
+            <h3>RECIPIENT</h3>
+            <div id="row1">
+                <div id="recipientFirstNameDiv">
+                    <label for="recipientFirstName">First Name*</label>
+                    <input type="text" id="recipientFirstName" name="recipientFirstName" placeholder="First Name">
+                </div>
+                <div id="recipientLastNameDiv">
+                    <label for="recipientLastName">Last Name*</label>
+                    <input type="text" id="recipientLastName" name="recipientLastName" placeholder="Last Name">
+                </div>
+                
+            </div>
+            <div id="row2">
+                <div id="recipientLastNameDiv">
+                    <label for="recipientRelationship">Relationship*</label>
+                    <input type="text" id="recipientRelationship" name="recipientRelationship" placeholder="Relationship">
+                </div>
+            </div>
+
+            <h3>DELIVER TO</h3>
+            <div id="row3">
+                <div id="addressDiv">
+                    <label for="address">Address*</label>
+                    <input type="text" id="address" name="address" placeholder="Address">
+                    <p>We cannot ship to PO Boxes</p>
+                </div>
+                <!-- <p>We cannot ship to PO Boxes</p> -->
+            </div>
+
+            <div id="row4">
+                <div id="aptDiv">
+                    <label for="apt">Apt/Suite</label>
+                    <input type="text" id="apt" name="apt" placeholder="Address">
+                </div>
+                <div id="cityDiv">
+                    <label for="city">City*</label>
+                    <input type="text" id="city" name="city" placeholder="City">
+                </div>
+            </div>
+
+            <div id="row5">
+                <div id="stateDiv">
+                    <label for="state">State*</label>
+                    <input type="text" id="state" name="state" placeholder="Select">
+                </div>
+
+                <div id="zipcodeDiv">
+                    <label for="zipcode">Zipcode*</label>
+                    <input type="text" id="zipcode" name="zipcode" placeholder="Zip Code">
+                </div>
+            </div>
+
+            <div id="row6">
+                <hr>
+                <button onclick="continueToSubmit()" type="submit">CONTINUE</button>
+                <p>Taxes and delivery calculated later</p>
+            </div>
+            
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+    <script src="configuration.js"></script>
+    <script>
+        const host = getHost();
+        let flowerInCart = JSON.parse(getTheItem());
+        console.log(flowerInCart);
+
+        document.getElementById("formFlowerName").innerHTML = flowerInCart.flowerName.toUpperCase();
+        document.getElementById("formFlowerPrice").innerHTML = "$" + flowerInCart.price;
+        document.getElementById("deliveryDate").innerHTML = flowerInCart.deliveryDate;
+        let deliveryDate = flowerInCart.deliveryDate;
+        const date = new Date(deliveryDate);
+        const options = { month: 'long', day: 'numeric', year: 'numeric' };
+        const formattedDate = date.toLocaleDateString('en-US', options);
+        document.getElementById("deliveryDate").innerHTML = formattedDate;
+        
+        let flowerId = flowerInCart.flowerId;
+
+        getTheImage(flowerId).then((blob) => {
+            let url = URL.createObjectURL(blob);
+            document.querySelector("#vertical img").src = url;
+        });
+
+        //Fill in the form with the items from local storage if user just created an account and logged in
+        if (JSON.parse(getThePreviousPage()) === "addDeliveryInfoLogged.html") {
+            let item = JSON.parse(getTheItem());
+            document.querySelector("#recipientFirstName").value = item.recipientFirstName;
+            document.querySelector("#recipientLastName").value = item.recipientLastName;
+            document.querySelector("#recipientRelationship").value = item.recipientRelationship;
+            document.querySelector("#address").value = item.address;
+            document.querySelector("#city").value = item.city;
+            document.querySelector("#state").value = item.state;
+            document.querySelector("#zipcode").value = item.zipcode;
+            document.querySelector("#apt").value = item.apt;
+        }
+
+        
+        async function getTheImage(flowerId) {
+            let response = await fetch(host + "/flowers/" + flowerId + "/image");
+            let result = await response.blob();
+            return result;
+        }
+
+        async function continueToSubmit() {
+            let recipientFirstName = document.querySelector("#recipientFirstName").value;
+            let recipientLastName = document.querySelector("#recipientLastName").value;
+            let recipientRelationship = document.querySelector("#recipientRelationship").value;
+            let address = document.querySelector("#address").value;
+            let city = document.querySelector("#city").value;
+            let state = document.querySelector("#state").value;
+            let zipcode = document.querySelector("#zipcode").value;
+            let apt = "";
+            if (document.querySelector("#apt").value !== "") {
+                apt = document.querySelector("#apt").value;
+            }
+
+            if (recipientFirstName === "" || recipientLastName === "" || recipientRelationship === "" || address === "" || city === "" || state === "" || zipcode === "") {
+                alert("You must fill out all required fields (indicated by *) to continue. Please try again.");
+                return;
+            }
+
+            //Use getTheItem() to get the item from local storage
+            //Then add the delivery information to the item
+            //Then call saveTheItem() to save the item back to local storage
+
+            let item = JSON.parse(getTheItem());
+            item.recipientFirstName = recipientFirstName;
+            item.recipientLastName = recipientLastName;
+            item.recipientRelationship = recipientRelationship;
+            item.address = address;
+            item.city = city;
+            item.state = state;
+            item.zipcode = zipcode;
+            item.apt = apt;
+
+            saveTheItem(item);
+
+            window.location.href = "placeOrder.html";
+
+
+        }
+    </script>
+    
+</body>
+</html>

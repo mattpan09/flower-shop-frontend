@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Orders - Flower Shop</title>
+    <script src="https://kit.fontawesome.com/fce219d3b5.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./resources/css/trackOrder.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav>
+        <div>
+            <div id="project-logo">
+            </div>
+            <h1><a href="index.html">Final Project</a></h1>
+        </div>
+        <ul>
+            <li id=""><a href="trackOrder.html">Track Order</a></li>
+            <li id=""><a>Help</a></li>
+            <a class="fa-solid fa-user" id="user-image" style="color: #1E3050;" onclick="goToLogin()"></a>
+            <div id="basket-icon">
+                <!-- <p> -->
+                <div id="basket-filler"></div>
+                <i class="fa-solid fa-basket-shopping" style="color: #1E3050;"></i>
+                <!-- </p> -->
+                <p id="basket-counter">0</p>
+            </div>
+            
+        </ul>
+    </nav>
+
+
+    <!-- Track Order -->
+    <div id="orders">
+        <div>
+            <h2>MY ORDERS</h2>
+            <hr>
+        </div>
+
+        <div id="numOfOrders">
+            <p id="displayNum"></p>
+            <hr>
+        </div>
+
+        <!-- Display orrder information here -->
+        <!-- <div id="orderInformation">
+            <h3>Flower Name:</h3>
+            <p>Total Order Cost:</p>
+            <p>Recipient First Name:</p>
+            <p>Recipient Last Name:</p>
+            <p>Order Status:</p>
+        </div>  -->
+    </div>
+
+    <script src="configuration.js"></script>
+    <script>
+        let host = getHost();
+        viewOrders();
+
+
+        if (!isLoggedIn()) {
+            alert("You need to log in to view your orders. Redirecting you to the signup/login page.");
+            goToLogin();
+        }
+
+        if (hasItem()) {
+            let basketCounter = document.querySelector("#basket-counter");
+            basketCounter.innerHTML = 1;
+        }
+        else {
+            let basketCounter = document.querySelector("#basket-counter");
+            basketCounter.innerHTML = 0;
+        }
+
+        async function goToLogin() {
+            // saveForm();
+            // console.log(getTheItem());
+
+            let thisPage = "index.html";
+            saveThePreviousPage(thisPage);
+            // console.log(getThePreviousPage());
+
+            window.location.href = "login.html";
+        }
+
+        async function viewOrders() {
+            let username = JSON.parse(getTheUsername());
+
+            let response = await fetch(host + "/orders/" + username, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${configuration.token()}`
+                }
+            });
+
+            let result = await response.json();
+            console.log(result.length);
+            if (result.length == 0) {
+                document.getElementById("displayNum").innerHTML = "You have no orders.";
+                return;
+            }
+            else {
+                document.getElementById("displayNum").innerHTML = "You have " + result.length + " orders.";
+            }
+
+            
+
+            /* These are the fields that we need to display for each order:
+            <div id="orderInformation">
+                <h3>Flower Name:</h3>
+                <p>Total Order Cost:</p>
+                <p>Recipient First Name:</p>
+                <p>Recipient Last Name:</p>
+                <p>Order Status:</p>
+                <hr>
+            </div> 
+            */
+
+            for (let i = 0; i < result.length; i++) {
+                let order = result[i];
+                let orderInformation = document.createElement("div");
+                orderInformation.id = "orderInformation";
+
+                // let flowerName = document.createElement("h3");
+                // flowerName.textContent = "Flower Name: " + order.flowerName;
+                // orderInformation.appendChild(flowerName);
+                //Make an API call to get all the flowers, then match the ID
+                //of the flower in the order to the flower in the flowers array
+                //to get the flower name
+                let flowersResponse = await fetch(host + "/flowers", {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // "Authorization": `Bearer ${configuration.token()}`
+                    }
+                });
+
+                let flowers = await flowersResponse.json();
+
+                let flower = flowers.find(f => f.id === order.flowerId);
+                let flowerName = document.createElement("h3");
+                flowerName.textContent = "Flower Name: " + flower.name;
+                orderInformation.appendChild(flowerName);
+
+
+
+                let totalOrderCost = document.createElement("p");
+                totalOrderCost.textContent = "Total Order Cost: $" + order.totalCost + ".00";
+                orderInformation.appendChild(totalOrderCost);
+
+                let recipientFirstName = document.createElement("p");
+                recipientFirstName.textContent = "Recipient First Name: " + order.recipientFirstName;
+                orderInformation.appendChild(recipientFirstName);
+
+                let recipientLastName = document.createElement("p");
+                recipientLastName.textContent = "Recipient Last Name: " + order.recipientLastName;
+                orderInformation.appendChild(recipientLastName);
+
+                let orderStatus = document.createElement("p");
+                //Make order status in proper case
+                orderStatus.textContent = "Order Status: " + order.orderStatus.charAt(0).toUpperCase() + order.orderStatus.slice(1).toLowerCase();
+                orderInformation.appendChild(orderStatus);
+
+                let hr = document.createElement("hr");
+                orderInformation.appendChild(hr);
+
+                document.getElementById("orders").appendChild(orderInformation);
+            }
+
+        }
+
+    </script>
+    
+</body>
+</html>
